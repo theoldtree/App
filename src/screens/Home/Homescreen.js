@@ -1,31 +1,30 @@
 import React from 'react';
-import { Text,View,Button } from 'react-native';
+import { Text, View, Button } from 'react-native';
 import styled from 'styled-components/native';
-import { FlexCenterView, DefaultButton} from '../../components/Styles/styles';
+import { FlexCenterView, DefaultButton } from '../../components/Styles/styles';
 
-export default function HomeScreen({navigation}){
+export default function HomeScreen({ navigation }) {
 
     const ButtonHandler = () => {
         navigation.navigate("Research")
     }
 
-    return(
+    return (
         <FlexCenterView>
-            <Text>HomeScreen</Text>
+            <ContentText size={20}>HomeScreen</ContentText>
             <DefaultButton
-                onPress = {ButtonHandler}
+                onPress={ButtonHandler}
             >
-                <Text>
+                <ContentText
+                    size={15}
+                >
                     Do Research
-                </Text>
+                </ContentText>
             </DefaultButton>
         </FlexCenterView>
-        );
+    );
 }
 
-const CenterView = styled.View`
-    flex: 1
-    justify-content: center
-    align-items: center
-    border-width: 1px
+const ContentText = styled.Text`
+    font-size: ${props => props.size}
 `
