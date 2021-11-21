@@ -1,44 +1,157 @@
-import React from 'react';
-import { Text, View, Button } from 'react-native';
-import styled from 'styled-components/native';
-import { FlexCenterView, DefaultButton } from '../../components/Styles/styles';
-import ImageColors from 'react-native-image-colors';
-
-export default function ResultScreen({ navigation }) {
-
-    const uri = require('./cat.png')
-
-    const result = await ImageColors.getColors(uri, {
-        fallback: '#228B22',
-        cache: true,
-        key: 'unique_key',
-    })
-
-    switch (result.platform) {
-        case 'android':
-            // android result properties
-            const vibrantColor = result.vibrant
+import {
+    Platform,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    SafeAreaView,
+  } from 'react-native'
+  import React, { useEffect, useState } from 'react'
+  import ImageColors from 'react-native-image-colors'
+  
+  const yunaUrl = 'https://i.imgur.com/68jyjZT.jpg'
+  const catUrl = 'https://i.imgur.com/O3XSdU7.jpg'
+  const catImg = require('../../images/cat.png')
+  
+  const initialState = {
+    colorOne: { value: '', name: '' },
+    colorTwo: { value: '', name: '' },
+    colorThree: { value: '', name: '' },
+    colorFour: { value: '', name: '' },
+    rawResult: '',
+  }
+  
+  export default function ResultScreen({ navigation }) {
+    const [colors, setColors] = useState(initialState)
+    const [loading, setLoading] = useState(true)
+  
+    useEffect(() => {
+      const fetchColors = async () => {
+        const result = await ImageColors.getColors(catImg, {
+          fallback: '#000000',
+          quality: 'low',
+          pixelSpacing: 5,
+          cache: true,
+        })
+  
+        switch (result.platform) {
+          case 'android':
+          case 'web':
+            setColors({
+              colorOne: { value: result.lightVibrant, name: 'lightVibrant' },
+              colorTwo: { value: result.dominant, name: 'dominant' },
+              colorThree: { value: result.vibrant, name: 'vibrant' },
+              colorFour: { value: result.darkVibrant, name: 'darkVibrant' },
+              rawResult: JSON.stringify(result),
+            })
             break
-        case 'web':
-            // web result properties
-            const lightVibrantColor = result.lightVibrant
+          case 'ios':
+            setColors({
+              colorOne: { value: result.background, name: 'background' },
+              colorTwo: { value: result.detail, name: 'detail' },
+              colorThree: { value: result.primary, name: 'primary' },
+              colorFour: { value: result.secondary, name: 'secondary' },
+              rawResult: JSON.stringify(result),
+            })
             break
-        case 'ios':
-            // iOS result properties
-            const primaryColor = result.primary
-            break
-        default:
-            throw new Error('Unexpected platform key')
+          default:
+            throw new Error('Unexpected platform')
+        }
+  
+        setLoading(false)
+      }
+  
+      fetchColors()
+    }, [])
+  
+    if (loading) {
+      return (
+        <View style={styles.container}>
+          <Text style={styles.loading}>Loading...</Text>
+        </View>
+      )
     }
-
+  
     return (
-        <FlexCenterView>
-            <ContentText size={20}>ResultScreen</ContentText>
-            <ContentText size={20}>{result}</ContentText>
-        </FlexCenterView>
-    );
-}
-
-const ContentText = styled.Text`
-    font-size: ${props => props.size}
-`
+      <View style={styles.container}>
+        <SafeAreaView style={styles.resultContainer}>
+          <Text style={styles.loading}>Result:</Text>
+          <Text style={styles.result}>{colors.rawResult}</Text>
+        </SafeAreaView>
+        <Image
+          resizeMode="contain"
+          style={styles.image}
+          source={{ catImg }}
+        />
+        <View style={styles.row}>
+          <Box name={colors.colorOne.name} value={colors.colorOne.value} />
+          <Box name={colors.colorTwo.name} value={colors.colorTwo.value} />
+        </View>
+        <View style={styles.row}>
+          <Box name={colors.colorThree.name} value={colors.colorThree.value} />
+          <Box name={colors.colorFour.name} value={colors.colorFour.value} />
+        </View>
+      </View>
+    )
+  }
+  
+  const Box = (props) => {
+    return (
+      <View
+        style={[
+          styles.box,
+          {
+            backgroundColor: props.value,
+          },
+        ]}
+      >
+        <Text style={styles.colorName}>{props.name}</Text>
+      </View>
+    )
+  }
+  
+  const styles = StyleSheet.create({
+    image: {
+      width: '100%',
+      height: 250,
+    },
+    colorName: {
+      backgroundColor: 'white',
+      padding: 4,
+      fontSize: 18,
+    },
+    box: {
+      flex: 1,
+      backgroundColor: 'red',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    row: {
+      flex: 1,
+      flexDirection: 'row',
+      width: '100%',
+    },
+    resultContainer: {
+      flex: 1,
+      padding: 20,
+      width: Platform.select({
+        web: 'fill-available',
+        ios: '100%',
+        android: '100%',
+      }),
+    },
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    loading: {
+      fontSize: 20,
+      textAlign: 'center',
+      margin: 10,
+    },
+    result: {
+      textAlign: 'center',
+      color: '#333333',
+    },
+  })
