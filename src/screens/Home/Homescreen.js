@@ -5,15 +5,19 @@ import { FlexCenterView, DefaultButton } from '../../components/Styles/styles';
 
 export default function HomeScreen({ navigation }) {
 
-    const ButtonHandler = () => {
+    const ResearchButtonHandler = () => {
         navigation.navigate("Research")
+    }
+
+    const CameraButtonHandler = () => {
+        navigation.navigate("Camera")
     }
 
     return (
         <FlexCenterView>
             <ContentText size={20}>HomeScreen</ContentText>
             <DefaultButton
-                onPress={ButtonHandler}
+                onPress={ResearchButtonHandler}
             >
                 <ContentText
                     size={15}
@@ -21,10 +25,19 @@ export default function HomeScreen({ navigation }) {
                     Do Research
                 </ContentText>
             </DefaultButton>
+            <DefaultButton
+                onPress={CameraButtonHandler}
+            >
+                <ContentText
+                    size={15}
+                >
+                    Camera
+                </ContentText>
+            </DefaultButton>
         </FlexCenterView>
     );
 }
 
 const ContentText = styled.Text`
-    font-size: ${props => props.size}
+    font-size: ${props => props.size}px
 `
