@@ -27,6 +27,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import styled from 'styled-components/native';
+import { CenterView, ContentText } from '../../components/Styles/styles';
 
 export default function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
@@ -48,6 +49,8 @@ export default function CameraScreen() {
   return (
     <View style={styles.container}>
       <Camera style={styles.camera} type={type}>
+      </Camera>
+      <BottomButtonContainer>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
@@ -58,10 +61,15 @@ export default function CameraScreen() {
                   : Camera.Constants.Type.back
               );
             }}>
-            <Text style={styles.text}> Flip </Text>
+            <ContentText
+                size = {20}
+                color = "blue"
+            >
+                Flip
+            </ContentText>
           </TouchableOpacity>
         </View>
-      </Camera>
+      </BottomButtonContainer>
     </View>
   );
 }
@@ -70,8 +78,11 @@ const styles = StyleSheet.create({
     container: {
       flex: 1,
     },
+    container2: {
+      flex: 0.1,
+    },
     camera: {
-      flex: 1,
+      flex: 0.9,
     },
     buttonContainer: {
       flex: 1,
@@ -89,3 +100,11 @@ const styles = StyleSheet.create({
       color: 'white',
     },
   });
+
+  const BottomButtonContainer = styled(CenterView)`
+    flex: 0.1;
+    flexDirection: 'row'
+    margin: 20px
+  `
+
+ 

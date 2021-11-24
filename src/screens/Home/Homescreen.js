@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, Button } from 'react-native';
 import styled from 'styled-components/native';
-import { FlexCenterView, DefaultButton } from '../../components/Styles/styles';
+import { FlexCenterView, DefaultButton, ContentText } from '../../components/Styles/styles';
 
 export default function HomeScreen({ navigation }) {
 
@@ -29,7 +29,8 @@ export default function HomeScreen({ navigation }) {
                 onPress={CameraButtonHandler}
             >
                 <ContentText
-                    size={15}
+                    size={30}
+                    color="#987654"
                 >
                     Camera
                 </ContentText>
@@ -37,7 +38,3 @@ export default function HomeScreen({ navigation }) {
         </FlexCenterView>
     );
 }
-
-const ContentText = styled.Text`
-    font-size: ${props => props.size}px
-`

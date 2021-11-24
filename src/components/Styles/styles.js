@@ -12,3 +12,8 @@ export const DefaultButton = styled.TouchableOpacity`
     border-radius: 10px
     padding: 8px
 `
+
+export const ContentText = styled.Text`
+    font-size: ${props => props.size}px
+    color: ${props => props.color}
+`
