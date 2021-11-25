@@ -3,6 +3,8 @@ import styled from 'styled-components/native';
 export const CenterView = styled.View`
     align-items: center
     justify-content: center
+    flex:1
+    border-width:1px
 `
 export const FlexCenterView = styled(CenterView)`
     flex: 1
