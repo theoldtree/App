@@ -1,28 +1,3 @@
-// import React from 'react';
-// import { Text, View, Button } from 'react-native';
-// import { FlexCenterView, DefaultButton } from '../../components/Styles/styles';
-
-// export default function CameraScreen({ navigation }) {
-
-//     const ButtonHandler = () => {
-//     }
-
-//     return (
-//         <FlexCenterView>
-//             <ContentText size={20}>CameraScreen</ContentText>
-//             <DefaultButton
-//                 onPress={ButtonHandler}
-//             >
-//                 <ContentText
-//                     size={15}
-//                 >
-//                     Take Photo
-//                 </ContentText>
-//             </DefaultButton>
-//         </FlexCenterView>
-//     );
-// }
-
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
@@ -75,6 +50,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
       flex: 1,
+      justifyContent: 'flex-end',
       backgroundColor: 'transparent',
       flexDirection: 'row',
       margin: 20,
@@ -89,3 +65,4 @@ const styles = StyleSheet.create({
       color: 'white',
     },
   });
+  
