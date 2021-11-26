@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/Home/Homescreen';
 import ResearchScreen from './src/screens/Research/ResearchScreen';
+import ResultScreen from './src/screens/Result/ResultScreen';
+import CameraScreen from './src/screens/Camera/CameraScreen';
 
 export default function App() {
 
@@ -15,6 +17,8 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen name = "Home" component = {HomeScreen}/>
         <Stack.Screen name = "Research" component = {ResearchScreen}/>
+        <Stack.Screen name = "Result" component = {ResultScreen}/>
+        <Stack.Screen name = "Camera" component = {CameraScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

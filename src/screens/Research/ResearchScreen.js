@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { FlexCenterView, DefaultButton } from '../../components/Styles/styles';
-import ImageColors from 'react-native-image-colors';
 
 export default function ResearchScreen({ navigation }) {
 
@@ -9,11 +8,8 @@ export default function ResearchScreen({ navigation }) {
         navigation.navigate("Home");
     }
 
-    const uri = require('../../images/cat.png');
-    
-
     const ResearchButtonHandler = () => {
-
+        navigation.navigate("Result")
     }
 
     return (
