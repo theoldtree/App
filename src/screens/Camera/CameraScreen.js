@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Platform, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import styled from 'styled-components/native';
 
@@ -7,6 +7,7 @@ export default function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const ref = useRef(null);
+  let source = "";
 
   const CAMERA_SCREEEN = 0;
   const LOADING_SCREEN = 1;
@@ -22,6 +23,9 @@ export default function CameraScreen() {
   const takePicture = async () => {
       const photo = await ref.current.takePictureAsync();
       console.debug(photo);
+      source = photo.uri;
+      console.log(source);
+      console.log("uri : " + source);
   };
 
   if (hasPermission === null) {
@@ -34,6 +38,10 @@ export default function CameraScreen() {
 
   return (
     <View style={styles.container}>
+      <Image
+        style = {styles.image}
+        source = {require('../../images/cat.png')}
+      />
       <Camera style={styles.camera} type={type} ref={ref}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -72,4 +80,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'white',
   },
+  image: {
+    height: 100,
+    width: 100
+  }
 });
