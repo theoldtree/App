@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
 import { Camera } from 'expo-camera';
 import styled from 'styled-components/native';
 
@@ -7,6 +7,10 @@ export default function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const ref = useRef(null);
+
+  const CAMERA_SCREEEN = 0;
+  const LOADING_SCREEN = 1;
+  const FINAL_SCREEN = 2;
 
   useEffect(() => {
     (async () => {
@@ -37,7 +41,7 @@ export default function CameraScreen() {
             onPress={() => {
               takePicture();
             }}>
-            <Text style={styles.text}> Snapp </Text>
+            <Text style={styles.text}> Snap </Text>
           </TouchableOpacity>
         </View>
       </Camera>
